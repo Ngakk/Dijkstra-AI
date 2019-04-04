@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[ExecuteInEditMode]
 public class Node : MonoBehaviour
 {
     //public Graph Grafo;
@@ -21,12 +22,18 @@ public class Node : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nameDisplay.text = Name;
-        
-        if(Connections.Count != ConnectionWeight.Count)
+        SetText();
+
+        if (Connections.Count != ConnectionWeight.Count)
         {
             Debug.LogError("Connections and ConnectionWeight for node " + Name + " are not the same sizse");
         }
+    }
+
+    public void SetText()
+    {
+        Name = name; //Esto lo hice al final para no matarme con el power grid xd
+        nameDisplay.text = Name;
     }
 
     // Update is called once per frame
