@@ -24,6 +24,7 @@ public class Graph : MonoBehaviour
     private List<Action<int>> actions;
     private Stack<Vector2Int> stack = new Stack<Vector2Int>();
     private Queue<Vector2Int> queue = new Queue<Vector2Int>();
+    private List<Vector2Int> path = new List<Vector2Int>();
 
     int stoper = 0;
 
@@ -38,31 +39,32 @@ public class Graph : MonoBehaviour
         actions = new List<Action<int>>(new Action<int>[] { DoDijkstra, DoBreadthFirst, DoDepthFirst });
 
         Visited = new List<int>();
-        stack = new Stack<Vector2Int>();
+        stack = new Stack<Vector2Int>();        //Clearing all previous data
         queue = new Queue<Vector2Int>();
 
         for (int i = 0; i < nodes.Count; i++)
         {
             nodes[i].SetText();
-            nodes[i].Distance = Mathf.Infinity;
+            nodes[i].Distance = Mathf.Infinity; //setting the nodes's initial values
             nodes[i].Parent = null;
             nodes[i].Id = i;
         }
 
         if (nodes.Count > StartingNode)
         {
-            nodes[StartingNode].Distance = 0;
+            nodes[StartingNode].Distance = 0; //Initializing the value of the starting node
         }
         else
         {
             Debug.LogError("Starting node " + StartingNode + " not found");
         }
 
-        if (EndingNode >= nodes.Count)
+        if (EndingNode >= nodes.Count) //Checking if end node exists
         {
             Debug.LogError("Ending node " + EndingNode + " not found");
         }
 
+        Debug.Log("Starting method " + (int)Method);
         actions[(int)Method](StartingNode);
         PrintSequence(EndingNode);
     }
@@ -72,54 +74,42 @@ public class Graph : MonoBehaviour
         List<Node> _con = nodes[_id].Connections;
         List<int> _wei = nodes[_id].ConnectionWeight;
 
-        int _min = -1;
-
-        Visited.Add(_id);
+        Visited.Add(_id); //Adding this node to the visited nodes list
 
         for(int i = 0; i < _con.Count; i++)
         {
-            if (_min != -1) //Finding the shortest route that leads to a node that i haven't visited
-            {
-                if(_wei[_min] > _wei[i] && !Visited.Contains(_con[i].Id))
-                {
-                    _min = i;
-                }
-            }
-            else if(!Visited.Contains(_con[i].Id))
-            {
-                _min = i;
-            }
-
             if(nodes[_id].Distance + _wei[i] < _con[i].Distance)
             {
                 _con[i].Distance = nodes[_id].Distance + _wei[i];
                 _con[i].Parent = nodes[_id];
+                queue.Enqueue(new Vector2Int(_id, _con[i].Id));
             }
         }
 
-        if (_min != -1)
-            DoDijkstra(_con[_min].Id);
-        else if(nodes[_id].Parent != null)
-            DoDijkstra(nodes[_id].Parent.Id);
+        if(queue.Count > 0)
+            DoDijkstra(queue.Dequeue().y);
     }
 
     private void PrintSequence(int _id)
     {
         Node current = nodes[_id];
-        string path = current.Name;
+        string _path = current.Name;
         while(current.Parent != null)
         {
             current = current.Parent;
-            path = current.Name + " > " + path;
+            _path = current.Name + " > " + _path;
+
         }
-        Debug.Log(path + " with distance " + nodes[_id].Distance);
+        if(Method == GraphMethod.DIJKSTRA)
+            Debug.Log(_path + " with distance " + nodes[_id].Distance);
+        else
+            Debug.Log(_path);
     }
 
     private void DoDepthFirst(int _id)
     {
         if(_id == EndingNode)
         {
-            PrintSequence(EndingNode);
             return;
         }
 
