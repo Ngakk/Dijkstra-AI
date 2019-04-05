@@ -2979,7 +2979,7 @@ PrefabInstance:
     - target: {fileID: 7218851985051302782, guid: 8944c0805e471be42a1441aa1c530959,
         type: 3}
       propertyPath: Name
-      value: G
+      value: Memphis
       objectReference: {fileID: 0}
     - target: {fileID: 7218851985051302782, guid: 8944c0805e471be42a1441aa1c530959,
         type: 3}
@@ -3010,7 +3010,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Connections.Array.data[4]
       value: 
-      objectReference: {fileID: 862343930}
+      objectReference: {fileID: 1414012738}
     - target: {fileID: 7218851985051302782, guid: 8944c0805e471be42a1441aa1c530959,
         type: 3}
       propertyPath: Connections.Array.data[5]
@@ -3040,6 +3040,21 @@ PrefabInstance:
         type: 3}
       propertyPath: ConnectionWeight.Array.data[5]
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218851985051302782, guid: 8944c0805e471be42a1441aa1c530959,
+        type: 3}
+      propertyPath: Distance
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218851985051302782, guid: 8944c0805e471be42a1441aa1c530959,
+        type: 3}
+      propertyPath: Parent
+      value: 
+      objectReference: {fileID: 1052286592}
+    - target: {fileID: 7218851985051302782, guid: 8944c0805e471be42a1441aa1c530959,
+        type: 3}
+      propertyPath: Id
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 5204230222441671323, guid: 8944c0805e471be42a1441aa1c530959,
         type: 3}
